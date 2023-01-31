@@ -1,5 +1,5 @@
 header {
-  background-color: rgb(11, 11, 100);
+  background-color: #0b0b64;
 }
 
 .container {
@@ -56,4 +56,13 @@ header {
 
 h1 {
   font-size: 6rem;
+}
+
+footer {
+  text-align: center;
+  padding-bottom: 1rem;
+}
+
+footer a {
+  color: #0d6efd;
 }
