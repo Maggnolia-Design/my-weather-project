@@ -1,43 +1,43 @@
-header {
-  background-color: #0b0b64;
-}
-
 .container {
   width: 800px;
-  margin: 3rem auto;
-  border: 1px grey solid;
+  margin: 2rem auto;
+  padding: 2rem;
+  border-radius: 2%;
+  box-shadow: 10px 10px 10px #aaa;
+  background-color: white;
 }
 
-.forecast-weather,
-.current-status {
-  padding: 1rem 4rem;
+body {
+  background-color: #eee;
+  font-family: "Open Sans", sans-serif;
 }
 
-.weather-report {
-  padding-top: 2rem;
-  padding-bottom: 2rem;
-}
+/* ---------- SEARCH SECTION --------- */
 
-.search-group {
+header {
   margin: 0 auto;
-  width: 80%;
   padding: 2rem;
 }
 
 .search-input,
-.search-button {
+.search-button,
+.current-location-button {
   padding: 0 1rem;
   border-radius: 0.4rem;
-  display: inline;
+  display: inline-block;
   height: 3rem;
   vertical-align: -webkit-baseline-middle;
+  border: none;
 }
 
-.current-location-button {
-  border-radius: 0.4rem;
-  border: solid #aaa 1px;
-  background-color: transparent;
-  margin: 1rem 0;
+.search-input {
+  background-color: #eee;
+}
+
+/* ---------- CURRENT STATUS SECTION --------- */
+
+.current-status {
+  padding: 2rem 4rem;
 }
 
 .convert-button {
@@ -49,13 +49,27 @@ header {
 }
 
 .current-icon {
-  font-size: 8rem;
-  padding-top: 1.5rem;
-  padding-left: 2rem;
+  font-size: 5rem;
+  padding: 1rem 1rem 2rem 1rem;
 }
 
 h1 {
-  font-size: 6rem;
+  font-size: 5rem;
+  font-weight: bold;
+}
+
+h3 {
+  font-size: 2.5rem;
+  font-weight: bold;
+}
+/* ---------- FORECAST SECTION --------- */
+
+.forecast-weather {
+  padding: 2rem;
+}
+
+.forecast-weather div {
+  text-align: center;
 }
 
 footer {

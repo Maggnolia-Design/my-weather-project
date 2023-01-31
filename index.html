@@ -18,75 +18,85 @@
     ></script>
     <script src="https://cdn.jsdelivr.net/npm/axios@1.1.2/dist/axios.min.js"></script>
     <link type="text/css" rel="stylesheet" href="src/style.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&display=swap"
+      rel="stylesheet"
+    />
     <title>Document</title>
   </head>
 
   <body>
     <div class="container">
-      <header class="row">
-        <div class="search-group col-10">
+      <header>
+        <div class="row search-group">
           <form>
             <input
               type="search"
-              class="search-input col-8"
-              placeholder=" Search"
+              class="search-input col-6"
+              placeholder="Search a city name"
             />
             <button type="submit" class="btn btn-primary search-button col-2">
               <i class="fa-solid fa-magnifying-glass"></i>
             </button>
+            <button class="btn btn-secondary current-location-button col-3">
+              <i class="fa fa-location-arrow" aria-hidden="true"></i>
+              Current
+            </button>
           </form>
-          <button class="btn btn-secondary current-location-button col-10">
-            <i class="fa fa-location-arrow" aria-hidden="true"></i> Enable
-            Current Location
-          </button>
         </div>
       </header>
       <section class="weather-report">
         <div class="current-status">
-          <h3 class="current-city">--</h3>
           <div class="row">
             <div class="col-6">
-              <h1>
-                <span class="current-temperature">--</span
-                ><span class="current-unit">°F</span>
-              </h1>
+              <h3 class="current-city">--</h3>
+              <i class="fa-sharp fa-solid fa-cloud-rain current-icon"></i>
               <div class="current-details">
                 <p class="current-date-time">--</p>
                 <p class="current-condition">--</p>
               </div>
             </div>
-            <div class="col-2">
-              <i class="fa-sharp fa-solid fa-cloud-rain current-icon"></i>
+            <div class="col-6">
+              <h1>
+                <span class="current-temperature">--</span>
+                <span class="current-unit">°F</span>
+              </h1>
+              <button type="button" class="btn btn-primary convert-button">
+                Convert Units [WIP]
+              </button>
             </div>
           </div>
-          <button type="button" class="btn btn-primary convert-button">
-            Convert Units [WIP]
-          </button>
         </div>
+        <hr />
 
         <div class="forecast-weather">
-          <h3>Forecast [WIP]</h3>
-          <hr />
           <div class="row">
             <div class="col">
               <p>Tue</p>
               <i class="fa-solid fa-wind forecast-icon"></i>
+              <h4>20°</h4>
             </div>
             <div class="col">
               <p>Wed</p>
               <i class="fa-solid fa-cloud-sun-rain forecast-icon"></i>
+              <h4>20°</h4>
             </div>
             <div class="col">
               <p>Thu</p>
               <i class="fa-solid fa-cloud-sun forecast-icon"></i>
+              <h4>20°</h4>
             </div>
             <div class="col">
               <p>Fri</p>
               <i class="fa-solid fa-sun forecast-icon"></i>
+              <h4>20°</h4>
             </div>
             <div class="col">
               <p>Sat</p>
               <i class="fa-solid fa-sun forecast-icon"></i>
+              <h4>20°</h4>
             </div>
           </div>
         </div>
