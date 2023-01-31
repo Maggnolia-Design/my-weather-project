@@ -1,0 +1,59 @@
+header {
+  background-color: rgb(11, 11, 100);
+}
+
+.container {
+  width: 800px;
+  margin: 3rem auto;
+  border: 1px grey solid;
+}
+
+.forecast-weather,
+.current-status {
+  padding: 1rem 4rem;
+}
+
+.weather-report {
+  padding-top: 2rem;
+  padding-bottom: 2rem;
+}
+
+.search-group {
+  margin: 0 auto;
+  width: 80%;
+  padding: 2rem;
+}
+
+.search-input,
+.search-button {
+  padding: 0 1rem;
+  border-radius: 0.4rem;
+  display: inline;
+  height: 3rem;
+  vertical-align: -webkit-baseline-middle;
+}
+
+.current-location-button {
+  border-radius: 0.4rem;
+  border: solid #aaa 1px;
+  background-color: transparent;
+  margin: 1rem 0;
+}
+
+.convert-button {
+  margin: 1rem auto;
+}
+
+.forecast-icon {
+  font-size: 2rem;
+}
+
+.current-icon {
+  font-size: 8rem;
+  padding-top: 1.5rem;
+  padding-left: 2rem;
+}
+
+h1 {
+  font-size: 6rem;
+}
