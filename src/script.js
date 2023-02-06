@@ -127,10 +127,10 @@ function convert(event) {
 let convertButton = document.querySelector(".convert-button");
 convertButton.addEventListener("click", convert);
 
-// ---------------------------------------
-// ---------------- TESTING --------------
-// ---------------------------------------
+// -----------------------------------------
+// ----------------- FORECAST --------------
+// -----------------------------------------
 
-# To add the HTML and CSS for forecast
-# To add the API call to get the forecast
-# Replace the dummy content
+// # To add the HTML and CSS for forecast
+// # To add the API call to get the forecast
+// # Replace the dummy content
