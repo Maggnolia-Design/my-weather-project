@@ -31,7 +31,7 @@ console.log(currentDateTime);
 // ------------------------ VARIABLES -----------------------
 // ----------------------------------------------------------
 
-let apiBase = "https://api.shecodes.io/weather/v1/current?";
+let apiBase = "https://api.shecodes.io/weather/v1/";
 let apiKey = "&key=980b37o4b3a1b1c1ab73fe5f07d91dta";
 let apiUnit = "&units=imperial";
 
@@ -42,12 +42,12 @@ let currentWind = document.querySelector(".current-wind");
 let currentIcon = document.querySelector(".current-icon");
 
 // --------------------------------------------------------------
-// ------------------------ SHOWS RESULTS -----------------------
+// ------------------ SHOWS RESULTS, CURRENT --------------------
 // --------------------------------------------------------------
 
-// Show result based on axios response
+// Shows result for current situation based on axios response
 
-function showResult(response) {
+function showCurrentWeather(response) {
   // show temperature and unit
   currentTemperature.innerHTML = `${Math.round(
     response.data.temperature.current
@@ -60,37 +60,89 @@ function showResult(response) {
   currentIcon.src = response.data.condition.icon_url;
 }
 
+// ----------------------------------------------------
+// ------------- SHOWS RESULTS, FORECAST --------------
+// ----------------------------------------------------
+
+// Shows result for forecasted situation
+
+function showForecastWeather(response) {
+  let forecastDiv = document.querySelector(".forecast > .row");
+  let forecastHTML = "";
+
+  let forecastDays = ["Thu", "Fri", "Sat", "Sun", "Mon"];
+
+  // here, we are looping through the days, each time
+  // appending a new day-specific div to the end of the existing one (concatitation)
+
+  for (var i = 0; i < 5; i++) {
+    forecastHTML =
+      forecastHTML +
+      `
+    <div class="col">
+      <p class="forecast-day">${forecastDays[i]}</p>
+      <img class="forecast-icon" src="${
+        response.data.daily[i].condition.icon_url
+      }"></img>
+      <h4>
+        <span class="forecast-high">${Math.round(
+          response.data.daily[i].temperature.maximum
+        )}°</span> | 
+        <span class="forecast-low">${Math.round(
+          response.data.daily[i].temperature.minimum
+        )}°</span>
+      </h4>
+    </div>
+  `;
+  }
+
+  // end by injecting final variable into HTML
+  forecastDiv.innerHTML = forecastHTML;
+}
+
 // --------------------------------------------------------------
 // --------------- UPDATE API URL BASED ON SEARCH ---------------
 // --------------------------------------------------------------
 
-function search(city) {
-  let fullApiUrl = `${apiBase}query=${city}${apiKey}${apiUnit}`;
+function getCurrentWeather(city) {
+  let fullApiUrl = `${apiBase}current?query=${city}${apiKey}${apiUnit}`;
   console.log(fullApiUrl);
-  axios.get(fullApiUrl).then(showResult);
+  axios.get(fullApiUrl).then(showCurrentWeather);
+}
+
+function getForecastWeather(city) {
+  let fullApiUrl = `${apiBase}forecast?query=${city}${apiKey}${apiUnit}`;
+  console.log(fullApiUrl);
+  axios.get(fullApiUrl).then(showForecastWeather);
 }
 
 function handleSubmit(event) {
   event.preventDefault();
   let apiQuery = document.querySelector(".search-input");
-  search(apiQuery.value);
+
+  getCurrentWeather(apiQuery.value);
+  getForecastWeather(apiQuery.value);
 }
-// run search function when form is submitted
+
 let form = document.querySelector("form");
 form.addEventListener("submit", handleSubmit);
 
-// ------------------------------------------------------
-// ---------- UPDATE BASED ON CURRENT LOCATION ----------
-// ------------------------------------------------------
+// get current and forecasted weather information for city of Boston
+getCurrentWeather("Boston");
+getForecastWeather("Boston");
 
-// takes position, updates the API URL using coordinates, then runs show results
+// --------------------------------------------------------------
+// ---------- UPDATE API URL BASED ON CURRENT LOCATION ----------
+// --------------------------------------------------------------
+
+// takes position, updates the API URL using coordinates, then runs showCurrentResult
 function searchGeolocation(position) {
   let apiLon = `${position.coords.longitude}`;
   let apiLat = `${position.coords.latitude}`;
 
-  let fullApiUrl = `${apiBase}lon=${apiLon}&lat=${apiLat}&key=${apiKey}${apiUnit}`;
+  let fullApiUrl = `${apiBase}current?lon=${apiLon}&lat=${apiLat}&key=${apiKey}${apiUnit}`;
   console.log(fullApiUrl);
-  axios.get(fullApiUrl).then(showResult);
+  axios.get(fullApiUrl).then(showCurrentResult);
 }
 // takes event, returns position
 function getGeolocation(event) {
@@ -127,13 +179,3 @@ function convert(event) {
 
 let convertButton = document.querySelector(".convert-button");
 convertButton.addEventListener("click", convert);
-
-// -----------------------------------------
-// ----------------- FORECAST --------------
-// -----------------------------------------
-
-// # To add the HTML and CSS for forecast
-// # To add the API call to get the forecast
-// # Replace the dummy content
-
-search("Boston");
