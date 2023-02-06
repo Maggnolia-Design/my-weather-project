@@ -1,80 +1,75 @@
 // ------------------------------------------------------
-// ----- SHOW CURRENT WEEKDAY, DATE, TIME, AND YEAR -----
+// ----------- SHOW CURRENT WEEKDAY AND TIME ------------
 // ------------------------------------------------------
 
 // defining variables
 
 let now = new Date();
 
-let date = now.getDate();
 let hour = now.getHours();
 let minutes = now.getMinutes();
-let years = now.getFullYear();
 
-let days = ["Sun", "Mon", "Tues", "Wed", "Thu", "Fri", "Sat"];
-let day = days[now.getDay()]; // 0 and 6
-
-let months = [
-  "Jan",
-  "Feb",
-  "Mar",
-  "Apr",
-  "May",
-  "Jun",
-  "Jul",
-  "Aug",
-  "Sep",
-  "Oct",
-  "Nov",
-  "Dec",
+let days = [
+  "Sunday",
+  "Monday",
+  "Tuesday",
+  "Wednesday",
+  "Thursday",
+  "Friday",
+  "Saturday",
 ];
-let month = months[now.getMonth()]; // 0 and 11
+
+let day = days[now.getDay()]; // 0 and 6
 
 // plug result into the corresponding paragraph
 
 let currentDateTime = document.querySelector(".current-date-time");
-currentDateTime.innerHTML = `${day} ${month} ${date}, ${hour}:${minutes}, ${years} [WIP]`;
+currentDateTime.innerHTML = `${day} ${hour}:${minutes}, [WIP]`;
 console.log(currentDateTime);
 
 // ----------------------------------------------------------
-// ----- UPDATE CITY AND API DATA BASED ON SEARCH INPUT -----
+// ------------------------ VARIABLES -----------------------
 // ----------------------------------------------------------
 
-//defining variables
-
-let currentCity = document.querySelector(".current-city");
 let searchInput = document.querySelector(".search-input");
 
-let apiBase = "https://api.openweathermap.org/data/2.5/weather?";
-let apiKey = "&appid=ba3a2d83a8227aa5c0e1f8782d2a124b";
+let apiBase = "https://api.shecodes.io/weather/v1/current?";
+let apiKey = "&key=980b37o4b3a1b1c1ab73fe5f07d91dta";
 let apiUnit = "&units=imperial";
 
+let currentCity = document.querySelector(".current-city");
+let currentTemperature = document.querySelector(".current-temperature");
+let currentCondition = document.querySelector(".current-condition");
+let currentWind = document.querySelector(".current-wind");
+let currentIcon = document.querySelector(".current-icon");
+
+// --------------------------------------------------------------
+// ------------------------ SHOWS RESULTS -----------------------
+// --------------------------------------------------------------
+
 // Show result based on axios response
+
 function showResult(response) {
   // show temperature and unit
-  let currentTemperature = document.querySelector(".current-temperature");
-  let currentUnit = document.querySelector(".current-unit");
+  currentTemperature.innerHTML = `${Math.round(
+    response.data.temperature.current
+  )}`;
 
-  currentTemperature.innerHTML = `${Math.round(response.data.main.temp)}`;
-  currentUnit.innerHTML = `°F`;
-
-  // show condition
-  let currentCondition = document.querySelector(".current-condition");
-  currentCondition.innerHTML = response.data.weather[0].main;
-
-  // show city name
-  currentCity.innerHTML = response.data.name;
-  console.log(response.data.name);
+  // show condition, wind speed, city name, and icon
+  currentCondition.innerHTML = response.data.condition.description;
+  currentWind.innerHTML = `Wind: ${response.data.wind.speed} mph`;
+  currentCity.innerHTML = response.data.city;
+  currentIcon.src = response.data.condition.icon_url;
 }
 
+// --------------------------------------------------------------
+// --------------- UPDATE API URL BASED ON SEARCH ---------------
+// --------------------------------------------------------------
+
 function search(event) {
-  // prevents page from reloading
   event.preventDefault();
-
-  // updates the API URL using search input, then runs show result
-  let apiCity = `q=${searchInput.value.replaceAll(" ", "")}`;
-  let fullApiUrl = `${apiBase}${apiCity}${apiKey}${apiUnit}`;
-
+  let apiQuery = `query=${searchInput.value}`;
+  let fullApiUrl = `${apiBase}${apiQuery}${apiKey}${apiUnit}`;
   console.log(fullApiUrl);
   axios.get(fullApiUrl).then(showResult);
 }
@@ -83,41 +78,38 @@ function search(event) {
 let form = document.querySelector("form");
 form.addEventListener("submit", search);
 
-// -----------------------------------
-// ----- CURRENT LOCATION OPTION -----
-// -----------------------------------
+// ------------------------------------------------------
+// ---------- UPDATE BASED ON CURRENT LOCATION ----------
+// ------------------------------------------------------
 
+// takes position, updates the API URL using coordinates, then runs show results
 function searchGeolocation(position) {
-  let apiLat = `lat=${position.coords.latitude}`;
-  let apiLon = `&lon=${position.coords.longitude}`;
+  let apiLon = `${position.coords.longitude}`;
+  let apiLat = `${position.coords.latitude}`;
 
-  // updates the API URL using coordinates, then runs show results
-  let fullApiUrl = `${apiBase}${apiLat}${apiLon}${apiKey}${apiUnit}`;
-
+  let fullApiUrl = `${apiBase}lon=${apiLon}&lat=${apiLat}&key=${apiKey}${apiUnit}`;
   console.log(fullApiUrl);
   axios.get(fullApiUrl).then(showResult);
 }
-
+// takes event, returns position
 function getGeolocation(event) {
-  // prevents page from reloading
   event.preventDefault();
-
-  // takes event, returns position
   navigator.geolocation.getCurrentPosition(searchGeolocation);
 }
 
+// run this both when button is clicked, and on page load
 let button = document.querySelector(".current-location-button");
 button.addEventListener("click", getGeolocation);
+document.addEventListener("DOMContentLoaded", getGeolocation);
 
-// -------------------------
-// ----- CONVERT UNITS -----
-// -------------------------
+// ---------------------------------------
+// ------------ CONVERT UNITS ------------
+// ---------------------------------------
 
 function convert(event) {
   event.preventDefault();
   let currentTemperature = document.querySelector(".current-temperature");
   let currentTemperatureText = currentTemperature.innerText;
-
   let currentUnit = document.querySelector(".current-unit");
 
   if (currentUnit.innerText === "°F") {
@@ -135,3 +127,7 @@ function convert(event) {
 
 let convertButton = document.querySelector(".convert-button");
 convertButton.addEventListener("click", convert);
+
+// -------------------------
+// -------- TESTING --------
+// -------------------------

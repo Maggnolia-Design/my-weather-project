@@ -37,11 +37,11 @@ header {
 /* ---------- CURRENT STATUS SECTION --------- */
 
 .current-status {
-  padding: 2rem 4rem;
+  padding: 2rem;
 }
 
 .convert-button {
-  margin: 1rem auto;
+  display: block;
 }
 
 .forecast-icon {
@@ -49,13 +49,27 @@ header {
 }
 
 .current-icon {
-  font-size: 5rem;
-  padding: 1rem 1rem 2rem 1rem;
+  width: 10rem;
+  padding-bottom: 2rem;
 }
 
+/* .righthand-display span {
+  vertical-align: top;
+} */
+
 h1 {
-  font-size: 5rem;
+  font-size: 6rem;
   font-weight: bold;
+  display: inline-block;
+  vertical-align: top;
+}
+
+.current-unit {
+  font-size: 2.5rem;
+  font-weight: bold;
+  display: inline-block;
+  vertical-align: top;
+  top: 1rem;
 }
 
 h3 {
