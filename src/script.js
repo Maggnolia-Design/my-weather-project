@@ -31,8 +31,6 @@ console.log(currentDateTime);
 // ------------------------ VARIABLES -----------------------
 // ----------------------------------------------------------
 
-let searchInput = document.querySelector(".search-input");
-
 let apiBase = "https://api.shecodes.io/weather/v1/current?";
 let apiKey = "&key=980b37o4b3a1b1c1ab73fe5f07d91dta";
 let apiUnit = "&units=imperial";
@@ -66,17 +64,20 @@ function showResult(response) {
 // --------------- UPDATE API URL BASED ON SEARCH ---------------
 // --------------------------------------------------------------
 
-function search(event) {
-  event.preventDefault();
-  let apiQuery = `query=${searchInput.value}`;
-  let fullApiUrl = `${apiBase}${apiQuery}${apiKey}${apiUnit}`;
+function search(city) {
+  let fullApiUrl = `${apiBase}query=${city}${apiKey}${apiUnit}`;
   console.log(fullApiUrl);
   axios.get(fullApiUrl).then(showResult);
 }
 
+function handleSubmit(event) {
+  event.preventDefault();
+  let apiQuery = document.querySelector(".search-input");
+  search(apiQuery.value);
+}
 // run search function when form is submitted
 let form = document.querySelector("form");
-form.addEventListener("submit", search);
+form.addEventListener("submit", handleSubmit);
 
 // ------------------------------------------------------
 // ---------- UPDATE BASED ON CURRENT LOCATION ----------
@@ -134,3 +135,5 @@ convertButton.addEventListener("click", convert);
 // # To add the HTML and CSS for forecast
 // # To add the API call to get the forecast
 // # Replace the dummy content
+
+search("Boston");
