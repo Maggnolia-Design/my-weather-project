@@ -144,6 +144,7 @@ function searchGeolocation(position) {
   console.log(fullApiUrl);
   axios.get(fullApiUrl).then(showCurrentResult);
 }
+
 // takes event, returns position
 function getGeolocation(event) {
   event.preventDefault();
@@ -158,23 +159,42 @@ button.addEventListener("click", getGeolocation);
 // ------------ CONVERT UNITS ------------
 // ---------------------------------------
 
+// to convert units, I'll try running getCurrentWeather and getForecastWeather apiUnit = "&units=metrics"
+// city is already known
 function convert(event) {
-  event.preventDefault();
-  let currentTemperature = document.querySelector(".current-temperature");
-  let currentTemperatureText = currentTemperature.innerText;
+  let city = document.querySelector(".current-city").innerHTML;
   let currentUnit = document.querySelector(".current-unit");
 
-  if (currentUnit.innerText === "°F") {
-    currentTemperature.innerHTML = Math.round(
-      ((currentTemperatureText - 32) * 5) / 9
-    );
-    currentUnit.innerHTML = "°C";
+  if (currentUnit.innerHTML === "°F") {
+    //switches to celcius
+    function getCurrentWeather() {
+      let fullApiUrl = `${apiBase}current?query=${city}${apiKey}&units=metrics`;
+      axios.get(fullApiUrl).then(showCurrentWeather);
+    }
+
+    function getForecastWeather() {
+      let fullApiUrl = `${apiBase}forecast?query=${city}${apiKey}&units=metrics`;
+      axios.get(fullApiUrl).then(showForecastWeather);
+      currentUnit.innerHTML = "°C";
+      console.log(currentUnit.innerHTML);
+    }
+
+    //switches to farenheit
   } else {
-    currentTemperature.innerHTML = Math.round(
-      (currentTemperatureText * 9) / 5 + 32
-    );
-    currentUnit.innerHTML = "°F";
+    function getCurrentWeather() {
+      let fullApiUrl = `${apiBase}current?query=${city}${apiKey}&units=imperial`;
+      axios.get(fullApiUrl).then(showCurrentWeather);
+    }
+
+    function getForecastWeather() {
+      let fullApiUrl = `${apiBase}forecast?query=${city}${apiKey}&units=imperial`;
+      axios.get(fullApiUrl).then(showForecastWeather);
+      currentUnit.innerHTML = "°F";
+      console.log(currentUnit.innerHTML);
+    }
   }
+  getCurrentWeather();
+  getForecastWeather();
 }
 
 let convertButton = document.querySelector(".convert-button");

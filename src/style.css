@@ -3,7 +3,7 @@
   margin: 2rem auto;
   padding: 2rem;
   border-radius: 2%;
-  box-shadow: 10px 10px 10px #aaa;
+  box-shadow: 10px 10px 10px #e9e9e9;
   background-color: white;
 }
 
@@ -72,8 +72,9 @@ h1 {
   top: 1rem;
 }
 
-.current-details {
+.current-details > p {
   color: #777;
+  margin-bottom: 0.5rem;
 }
 
 h3 {
@@ -111,7 +112,10 @@ h4 {
 /* ---------- FOOTER SECTION --------- */
 
 footer {
-  text-align: center;
+  width: 800px;
+  margin: auto;
+  font-size: 1rem;
+  text-align: left;
   padding-bottom: 1rem;
 }
 
