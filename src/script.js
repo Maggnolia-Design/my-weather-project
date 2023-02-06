@@ -97,10 +97,9 @@ function getGeolocation(event) {
   navigator.geolocation.getCurrentPosition(searchGeolocation);
 }
 
-// run this both when button is clicked, and on page load
+// run when button is clicked
 let button = document.querySelector(".current-location-button");
 button.addEventListener("click", getGeolocation);
-document.addEventListener("DOMContentLoaded", getGeolocation);
 
 // ---------------------------------------
 // ------------ CONVERT UNITS ------------
@@ -128,6 +127,10 @@ function convert(event) {
 let convertButton = document.querySelector(".convert-button");
 convertButton.addEventListener("click", convert);
 
-// -------------------------
-// -------- TESTING --------
-// -------------------------
+// ---------------------------------------
+// ---------------- TESTING --------------
+// ---------------------------------------
+
+# To add the HTML and CSS for forecast
+# To add the API call to get the forecast
+# Replace the dummy content
