@@ -54,7 +54,7 @@ function showCurrentWeather(response) {
   )}`;
 
   // show condition, wind speed, city name, and icon
-  currentCondition.innerHTML = response.data.condition.description;
+  currentCondition.innerHTML = `Status: ${response.data.condition.description}`;
   currentWind.innerHTML = `Wind: ${response.data.wind.speed} mph`;
   currentCity.innerHTML = response.data.city;
   currentIcon.src = response.data.condition.icon_url;
