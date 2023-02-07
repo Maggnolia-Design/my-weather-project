@@ -70,12 +70,12 @@ function showForecastWeather(response) {
   let forecastDiv = document.querySelector(".forecast > .row");
   let forecastHTML = "";
 
-  let forecastDays = ["Thu", "Fri", "Sat", "Sun", "Mon"];
+  let forecastDays = ["Tues", "Wed", "Thu", "Fri", "Sat", "Sun", "Mon"];
 
   // here, we are looping through the days, each time
   // appending a new day-specific div to the end of the existing one (concatitation)
 
-  for (var i = 0; i < 5; i++) {
+  for (var i = 0; i < 6; i++) {
     forecastHTML =
       forecastHTML +
       `

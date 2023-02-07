@@ -41,8 +41,7 @@
               <i class="fa-solid fa-magnifying-glass"></i>
             </button>
             <button class="btn btn-secondary current-location-button col-3">
-              <i class="fa fa-location-arrow" aria-hidden="true"></i>
-              Current
+              Current Location
             </button>
           </form>
         </div>
@@ -50,23 +49,21 @@
       <section class="weather-report">
         <div class="current-status">
           <div class="row">
-            <div class="col-6">
-              <h3 class="current-city">--</h3>
-              <img class="current-icon" src="http://shecodes-assets.s3.amazonaws.com/api/weather/icons/broken-clouds-night.png"></img>
+            <div class="col-4">
+              <h3 class="current-city"></h3>
               <div class="current-details">
-                <p>
-                  <span class="current-date-time">--</span>
-                  <span class="current-condition">--</span>
-                </p>
-                <p class="current-wind">--</p>
+                <p class="current-date-time"></p>
+                <p class="current-condition"></p>
+                <p class="current-wind"></p>
               </div>
-            </div>
-            <div class="col-6 righthand-display">
-              <h1 class="current-temperature">--</h1>
-              <p class="current-unit">°F</p>
               <button type="button" class="btn btn-primary convert-button">
                 Convert Units
               </button>
+            </div>
+            <div class="col-8 righthand-display">
+              <img class="current-icon" src="http://shecodes-assets.s3.amazonaws.com/api/weather/icons/broken-clouds-night.png"></img>
+              <h1 class="current-temperature"></h1>
+              <p class="current-unit">°F</p>
             </div>
           </div>
         </div>
