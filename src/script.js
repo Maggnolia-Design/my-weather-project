@@ -2,44 +2,41 @@
 // ----------- SHOW CURRENT WEEKDAY AND TIME ------------
 // ------------------------------------------------------
 
-// defining variables
+function getDateTime(coordinates) {
+  let timeApiBase =
+    "https://api.timezonedb.com/v2.1/get-time-zone?key=5DF9APBUNYVJ&format=json&by=position";
+  let fullTimeApiURL = `${timeApiBase}&lat=${coordinates.latitude}&lng=${coordinates.longitude}`;
 
-let now = new Date();
+  console.log(fullTimeApiURL);
+  axios.get(fullTimeApiURL).then(showDateTime);
+}
 
-let hour = now.getHours();
-let minutes = now.getMinutes();
+function showDateTime(response) {
+  let day = response.data.formatted.slice(8, 10);
+  let time = response.data.formatted.slice(11, 16);
+  let abbreviation = response.data.abbreviation;
+  let monthNumber = parseInt(response.data.formatted.slice(5, 7));
+  let months = [
+    "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+    "December",
+  ];
 
-let days = [
-  "Sunday",
-  "Monday",
-  "Tuesday",
-  "Wednesday",
-  "Thursday",
-  "Friday",
-  "Saturday",
-];
+  console.log(monthNumber);
+  let month = months[monthNumber];
 
-let day = days[now.getDay()]; // 0 and 6
-
-// plug result into the corresponding paragraph
-
-let currentDateTime = document.querySelector(".current-date-time");
-currentDateTime.innerHTML = `${day} ${hour}:${minutes}, [WIP]`;
-console.log(currentDateTime);
-
-// ----------------------------------------------------------
-// ------------------------ VARIABLES -----------------------
-// ----------------------------------------------------------
-
-let apiBase = "https://api.shecodes.io/weather/v1/";
-let apiKey = "&key=980b37o4b3a1b1c1ab73fe5f07d91dta";
-let apiUnit = "&units=imperial";
-
-let currentCity = document.querySelector(".current-city");
-let currentTemperature = document.querySelector(".current-temperature");
-let currentCondition = document.querySelector(".current-condition");
-let currentWind = document.querySelector(".current-wind");
-let currentIcon = document.querySelector(".current-icon");
+  let currentDateTime = document.querySelector(".current-date-time");
+  currentDateTime.innerHTML = `${month} ${day} ${time} ${abbreviation}`;
+}
 
 // --------------------------------------------------------------
 // ------------------ SHOWS RESULTS, CURRENT --------------------
@@ -48,6 +45,12 @@ let currentIcon = document.querySelector(".current-icon");
 // Shows result for current situation based on axios response
 
 function showCurrentWeather(response) {
+  let currentCity = document.querySelector(".current-city");
+  let currentTemperature = document.querySelector(".current-temperature");
+  let currentCondition = document.querySelector(".current-condition");
+  let currentWind = document.querySelector(".current-wind");
+  let currentIcon = document.querySelector(".current-icon");
+
   // show temperature and unit
   currentTemperature.innerHTML = `${Math.round(
     response.data.temperature.current
@@ -58,6 +61,10 @@ function showCurrentWeather(response) {
   currentWind.innerHTML = `Wind: ${response.data.wind.speed} mph`;
   currentCity.innerHTML = response.data.city;
   currentIcon.src = response.data.condition.icon_url;
+
+  // Using this for date and time function above
+  getDateTime(response.data.coordinates);
+  console.log(response.data.coordinates);
 }
 
 // ----------------------------------------------------
@@ -101,8 +108,16 @@ function showForecastWeather(response) {
 }
 
 // --------------------------------------------------------------
-// --------------- UPDATE API URL BASED ON SEARCH ---------------
+// ----------------- GET WEATHER BASED ON SEARCH ----------------
 // --------------------------------------------------------------
+
+// ------------------------ API VARIABLES -----------------------
+
+let apiBase = "https://api.shecodes.io/weather/v1/";
+let apiKey = "&key=980b37o4b3a1b1c1ab73fe5f07d91dta";
+let apiUnit = "&units=imperial";
+
+// -------------------------- FUNCTIONS -------------------------
 
 function getCurrentWeather(city) {
   let fullApiUrl = `${apiBase}current?query=${city}${apiKey}${apiUnit}`;
@@ -127,12 +142,12 @@ function handleSubmit(event) {
 let form = document.querySelector("form");
 form.addEventListener("submit", handleSubmit);
 
-// get current and forecasted weather information for city of Boston
+// -------------------- SHOW BOSTON ON LOAD ---------------------
 getCurrentWeather("Boston");
 getForecastWeather("Boston");
 
 // --------------------------------------------------------------
-// ---------- UPDATE API URL BASED ON CURRENT LOCATION ----------
+// ------------ UPDATE WEATHER BASED ON GEOLOCATION -------------
 // --------------------------------------------------------------
 
 // takes position, updates the API URL using coordinates, then runs showCurrentResult
