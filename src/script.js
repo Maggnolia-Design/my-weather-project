@@ -44,6 +44,7 @@ function showCurrentWeather(response) {
   let currentTemperature = document.querySelector(".current-temperature");
   let currentCondition = document.querySelector(".current-condition");
   let currentWind = document.querySelector(".current-wind");
+  let currentHumidity = document.querySelector(".current-humidity");
   let currentIcon = document.querySelector(".current-icon");
 
   // show temperature and unit
@@ -54,6 +55,7 @@ function showCurrentWeather(response) {
   // show condition, wind speed, city name, and icon
   currentCondition.innerHTML = `Status: ${response.data.condition.description}`;
   currentWind.innerHTML = `Wind: ${response.data.wind.speed}`;
+  currentHumidity.innerHTML = `Humidity: ${response.data.temperature.humidity}%`;
   currentCity.innerHTML = response.data.city;
   currentIcon.src = response.data.condition.icon_url;
 
