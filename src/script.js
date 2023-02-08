@@ -1,19 +1,4 @@
 // ------------------------------------------------------
-// --------------------- VARIABLES ----------------------
-// ------------------------------------------------------
-
-let currentCity = document.querySelector(".current-city");
-let currentTemp = document.querySelector(".current-temp");
-let currentCondition = document.querySelector(".current-condition");
-let currentHumidity = document.querySelector(".current-humidity");
-let currentWind = document.querySelector(".current-wind");
-let currentIcon = document.querySelector(".current-icon");
-
-let tempUnit = document.querySelector(".temp-unit");
-let windUnit = document.querySelector(".wind-unit");
-let humidityUnit = document.querySelector(".humidity-unit");
-
-// ------------------------------------------------------
 // ----------- SHOW CURRENT WEEKDAY AND TIME ------------
 // ------------------------------------------------------
 
@@ -28,7 +13,7 @@ function showDateTime(response) {
   let day = response.data.formatted.slice(8, 10);
   let time = response.data.formatted.slice(11, 16);
   let abbreviation = response.data.abbreviation;
-  let monthNumber = parseInt(response.data.formatted.slice(5, 7)) - 1;
+  let monthNumber = parseInt(response.data.formatted.slice(5, 7));
   let months = [
     "January",
     "February",
@@ -63,8 +48,9 @@ function showCurrentWeather(response) {
   let currentIcon = document.querySelector(".current-icon");
 
   // show temperature and unit
-  currentTemp.innerHTML = `${Math.round(response.data.temperature.current)}`;
-  console.log(response.data.temperature.current);
+  currentTemperature.innerHTML = `${Math.round(
+    response.data.temperature.current
+  )}`;
 
   // show condition, wind speed, city name, and icon
   currentCondition.innerHTML = `Status: ${response.data.condition.description}`;
@@ -86,6 +72,7 @@ function showCurrentWeather(response) {
 function showForecastWeather(response) {
   let forecastDiv = document.querySelector(".forecast > .row");
   let forecastHTML = "";
+
   let forecastDays = ["Tues", "Wed", "Thu", "Fri", "Sat", "Sun", "Mon"];
 
   // here, we are looping through the days, each time
@@ -112,9 +99,6 @@ function showForecastWeather(response) {
   `;
   }
 
-  console.log(response.data.daily[0].condition);
-  console.log(response);
-
   // end by injecting final variable into HTML
   forecastDiv.innerHTML = forecastHTML;
 }
@@ -123,7 +107,7 @@ function showForecastWeather(response) {
 // ----------------- GET WEATHER BASED ON SEARCH ----------------
 // --------------------------------------------------------------
 
-// -------------------------- VARIABLES -------------------------
+// ------------------------ API VARIABLES -----------------------
 
 let apiBase = "https://api.shecodes.io/weather/v1/";
 let apiKey = "&key=980b37o4b3a1b1c1ab73fe5f07d91dta";
@@ -134,9 +118,6 @@ function getCurrentWeather(city) {
   let fullApiUrl = `${apiBase}current?query=${city}${apiKey}&units=imperial`;
   console.log(fullApiUrl);
   axios.get(fullApiUrl).then(showCurrentWeather);
-
-  console.log(`log${city}`);
-  console.log(`log${fullApiUrl}`);
 }
 
 function getForecastWeather(city) {
@@ -171,7 +152,7 @@ function searchGeolocation(position) {
 
   let fullApiUrl = `${apiBase}current?lon=${apiLon}&lat=${apiLat}&key=${apiKey}&units=imperial`;
   console.log(fullApiUrl);
-  axios.get(fullApiUrl).then(showCurrentWeather);
+  axios.get(fullApiUrl).then(showCurrentResult);
 }
 
 // takes event, returns position
@@ -191,29 +172,40 @@ button.addEventListener("click", getGeolocation);
 // to convert units, I'll try running getCurrentWeather and getForecastWeather apiUnit = "&units=metrics"
 // city is already known
 function convert(event) {
-  if (tempUnit.innerHTML === "°F") {
+  let city = document.querySelector(".current-city").innerHTML;
+  let currentUnit = document.querySelector(".current-unit");
+  let windUnit = document.querySelector(".wind-unit");
+
+  if (currentUnit.innerHTML === "°F") {
     //switches to celcius
     function getCurrentWeather() {
-      let fullApiUrl = `${apiBase}current?query=${city}${apiKey}&units=metrics`;
+      let fullApiUrl = `${apiBase}current?query=${city}${apiKey}&units=metric`;
       axios.get(fullApiUrl).then(showCurrentWeather);
+      currentUnit.innerHTML = "°C";
+      windUnit.innerHTML = "&nbspmps";
     }
 
     function getForecastWeather() {
-      let fullApiUrl = `${apiBase}forecast?query=${city}${apiKey}&units=metrics`;
+      let fullApiUrl = `${apiBase}forecast?query=${city}${apiKey}&units=metric`;
       axios.get(fullApiUrl).then(showForecastWeather);
     }
-    useCurrentWeather();
-    useCurrentForecast();
-    tempUnit.innerHTML = "°C";
-    windUnit.innerHTML = "&nbspmps";
 
-    //run as usual
+    //switches to farenheit
   } else {
-    getCurrentWeather(currentCity.innerHTML);
-    getForecastWeather(currentCity.innerHTML);
-  }
+    function getCurrentWeather() {
+      let fullApiUrl = `${apiBase}current?query=${city}${apiKey}&units=imperial`;
+      axios.get(fullApiUrl).then(showCurrentWeather);
+      currentUnit.innerHTML = "°F";
+      windUnit.innerHTML = "&nbspmph";
+    }
 
-  console.log(currentCity.innerHTML);
+    function getForecastWeather() {
+      let fullApiUrl = `${apiBase}forecast?query=${city}${apiKey}&units=imperial`;
+      axios.get(fullApiUrl).then(showForecastWeather);
+    }
+  }
+  getCurrentWeather();
+  getForecastWeather();
 }
 
 let convertButton = document.querySelector(".convert-button");
