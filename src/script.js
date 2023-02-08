@@ -177,14 +177,14 @@ function convert(event) {
   if (currentUnit.innerHTML === "°F") {
     //switches to celcius
     function getCurrentWeather() {
-      let fullApiUrl = `${apiBase}current?query=${city}${apiKey}&units=metrics`;
+      let fullApiUrl = `${apiBase}current?query=${city}${apiKey}&units=metric`;
       axios.get(fullApiUrl).then(showCurrentWeather);
       currentUnit.innerHTML = "°C";
       windUnit.innerHTML = "&nbspmps";
     }
 
     function getForecastWeather() {
-      let fullApiUrl = `${apiBase}forecast?query=${city}${apiKey}&units=metrics`;
+      let fullApiUrl = `${apiBase}forecast?query=${city}${apiKey}&units=metric`;
       axios.get(fullApiUrl).then(showForecastWeather);
     }
 
