@@ -199,8 +199,8 @@ function convert(event) {
       let fullApiUrl = `${apiBase}forecast?query=${city}${apiKey}&units=metrics`;
       axios.get(fullApiUrl).then(showForecastWeather);
     }
-    useMetricCurrent();
-    useMetricForecast();
+    useCurrentWeather();
+    useCurrentForecast();
     tempUnit.innerHTML = "°C";
     windUnit.innerHTML = "&nbspmps";
 
