@@ -62,7 +62,7 @@ h1 {
   padding-top: 2rem;
 }
 
-.current-unit {
+.temp-unit {
   font-size: 2.5rem;
   font-weight: bold;
   display: inline-block;
@@ -71,7 +71,9 @@ h1 {
 }
 
 .current-wind,
-.wind-unit {
+.wind-unit,
+.current-humidity,
+.humidity-unit {
   display: inline-block;
 }
 
