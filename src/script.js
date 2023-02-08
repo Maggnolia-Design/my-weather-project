@@ -41,16 +41,14 @@ function showDateTime(response) {
 
 function showCurrentWeather(response) {
   let currentCity = document.querySelector(".current-city");
-  let currentTemperature = document.querySelector(".current-temperature");
+  let currentTemp = document.querySelector(".current-temp");
   let currentCondition = document.querySelector(".current-condition");
   let currentWind = document.querySelector(".current-wind");
   let currentHumidity = document.querySelector(".current-humidity");
   let currentIcon = document.querySelector(".current-icon");
 
   // show temperature and unit
-  currentTemperature.innerHTML = `${Math.round(
-    response.data.temperature.current
-  )}`;
+  currentTemp.innerHTML = `${Math.round(response.data.temperature.current)}`;
 
   // show condition, wind speed, city name, and icon
   currentCondition.innerHTML = `Status: ${response.data.condition.description}`;
@@ -173,15 +171,15 @@ button.addEventListener("click", getGeolocation);
 // city is already known
 function convert(event) {
   let city = document.querySelector(".current-city").innerHTML;
-  let currentUnit = document.querySelector(".current-unit");
+  let tempUnit = document.querySelector(".temp-unit");
   let windUnit = document.querySelector(".wind-unit");
 
-  if (currentUnit.innerHTML === "°F") {
+  if (tempUnit.innerHTML === "°F") {
     //switches to celcius
     function getCurrentWeather() {
       let fullApiUrl = `${apiBase}current?query=${city}${apiKey}&units=metric`;
       axios.get(fullApiUrl).then(showCurrentWeather);
-      currentUnit.innerHTML = "°C";
+      tempUnit.innerHTML = "°C";
       windUnit.innerHTML = "&nbspmps";
     }
 
@@ -195,7 +193,7 @@ function convert(event) {
     function getCurrentWeather() {
       let fullApiUrl = `${apiBase}current?query=${city}${apiKey}&units=imperial`;
       axios.get(fullApiUrl).then(showCurrentWeather);
-      currentUnit.innerHTML = "°F";
+      tempUnit.innerHTML = "°F";
       windUnit.innerHTML = "&nbspmph";
     }
 
