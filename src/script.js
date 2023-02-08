@@ -190,13 +190,13 @@ button.addEventListener("click", getGeolocation);
 function convert(event) {
   if (tempUnit.innerHTML === "°F") {
     //switches to celcius
-    function useMetricCurrent() {
-      let fullApiUrl = `${apiBase}current?query=${currentCity.innerHTML}${apiKey}&units=metric`;
+    function getCurrentWeather() {
+      let fullApiUrl = `${apiBase}current?query=${city}${apiKey}&units=metrics`;
       axios.get(fullApiUrl).then(showCurrentWeather);
     }
 
-    function useMetricForecast() {
-      let fullApiUrl = `${apiBase}forecast?query=${currentCity.innerHTML}${apiKey}&units=metric`;
+    function getForecastWeather() {
+      let fullApiUrl = `${apiBase}forecast?query=${city}${apiKey}&units=metrics`;
       axios.get(fullApiUrl).then(showForecastWeather);
     }
     useMetricCurrent();
