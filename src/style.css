@@ -31,7 +31,7 @@ header {
 }
 
 .search-input {
-  background-color: #eee;
+  background-color: #efefef;
 }
 
 /* ---------- CURRENT STATUS SECTION --------- */
@@ -68,6 +68,11 @@ h1 {
   display: inline-block;
   vertical-align: top;
   padding-top: 2.5rem;
+}
+
+.current-wind,
+.wind-unit {
+  display: inline-block;
 }
 
 .current-details {
