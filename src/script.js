@@ -150,7 +150,7 @@ function searchGeolocation(position) {
 
   let fullApiUrl = `${apiBase}current?lon=${apiLon}&lat=${apiLat}&key=${apiKey}&units=imperial`;
   console.log(fullApiUrl);
-  axios.get(fullApiUrl).then(showCurrentResult);
+  axios.get(fullApiUrl).then(showCurrentWeather);
 }
 
 // takes event, returns position
